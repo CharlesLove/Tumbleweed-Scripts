@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This script does a distribution upgrade and updates flatpaks
+# for OpenSUSE Tumbleweed installations
+
+# Install instructions:
+# - place this file, update-system, in /home/[YOURNAME]/bin/
+# - set update-system as executable
+# How to use:
+# - run update-system on the terminal and follow the instructions
+
+original_snap_version=$( lsb-release -a | grep Release)
+
+echo "---Current Snapshot---" &&
+echo $original_snap_version &&
+echo "---Running System Upgrade---" &&
+sudo zypper dup &&
+echo "---Updating Flatpaks---" &&
+flatpak update &&
+echo "---Updates Finished---" &&
+final_snap_version="$( lsb-release -a | grep Release)" &&
+
+if [[ "$original_snap_version" == "$final_snap_version" ]]; then
+    echo "Snapshot has not changed. A reboot is likely unnecessary."
+else
+    echo -e "Snapshot has been upgraded to:\n$final_snap_version"
+    read -p "It is recommended to reboot after a system upgrade. Do you want to reboot? (y/n) " yn
+    case $yn in
+        [Yy]* ) echo "Rebooting"; sudo reboot;;
+        * ) exit;;
+    esac
+
+fi
