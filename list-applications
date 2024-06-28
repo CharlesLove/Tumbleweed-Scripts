@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# This script lists manually installed programs and flatpaks
+# for OpenSUSE Tumbleweed installations
+
+# Install instructions:
+# - place this file, list-applications, in /home/[YOURNAME]/bin/
+# - set list-applications as executable
+# How to use:
+# - run list-applications on the terminal
+
+echo "---Manually Installed Packages---" &&
+echo "$(zypper packages --installed-only | grep i+)" &&
+echo "---Flatpaks---" &&
+flatpak list --app
