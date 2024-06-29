@@ -16,7 +16,11 @@ if [ $? -eq 1 ]; then
     echo "This device is offline. Please connect to the internet and try again."; exit;
 fi
 
-original_snap_version=$( lsb-release -a | grep Release)
+original_snap_version="$( lsb-release -r )"
+
+if [ "$original_snap_version" == "" ]; then
+    echo "Error: Cannot get current snapshot version. Make sure lsb-release is installed properly and try again."; exit;
+fi
 
 echo "---Current Snapshot---" &&
 echo $original_snap_version &&
@@ -25,7 +29,7 @@ sudo zypper dup &&
 echo "---Updating Flatpaks---" &&
 flatpak update &&
 echo "---Updates Finished---" &&
-final_snap_version="$( lsb-release -a | grep Release)" &&
+final_snap_version="$( lsb-release -r )" &&
 
 if [[ "$original_snap_version" == "$final_snap_version" ]]; then
     echo "Snapshot has not changed. A reboot is likely unnecessary."
