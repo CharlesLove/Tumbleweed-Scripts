@@ -9,6 +9,13 @@
 # How to use:
 # - run update-system on the terminal and follow the instructions
 
+# check for internet before attempting to continue
+echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+
+if [ $? -eq 1 ]; then
+    echo "This device is offline. Please connect to the internet and try again."; exit;
+fi
+
 original_snap_version=$( lsb-release -a | grep Release)
 
 echo "---Current Snapshot---" &&
