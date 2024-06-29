@@ -33,7 +33,7 @@ else
     echo -e "Snapshot has been upgraded to:\n$final_snap_version"
     read -p "It is recommended to reboot after a system upgrade. Do you want to reboot? (y/n) " yn
     case $yn in
-        [Yy]* ) echo "Rebooting"; sudo reboot;;
+        [Yy]* ) echo "Rebooting"; /usr/sbin/reboot;;
         * ) exit;;
     esac
 
