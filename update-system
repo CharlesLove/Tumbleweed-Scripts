@@ -35,7 +35,7 @@ if [[ "$original_snap_version" == "$final_snap_version" ]]; then
     echo "Snapshot has not changed. A reboot is likely unnecessary."
 else
     echo -e "Snapshot has been upgraded to:\n$final_snap_version"
-    read -p "It is recommended to reboot after a system upgrade. Do you want to reboot? (Y/n) " yn
+    read -p "It is recommended to reboot after a system upgrade. Do you want to reboot? [y/n] (y)" yn
     case $yn in
         [Yy]* ) echo "Rebooting"; /usr/sbin/reboot;;
         "" ) echo "Rebooting"; /usr/sbin/reboot;;
