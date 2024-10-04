@@ -24,6 +24,8 @@ fi
 
 echo "---Current Snapshot---" &&
 echo $original_snap_version &&
+echo "---Stopping Packagekit---" &&
+sudo systemctl stop packagekit &&
 echo "---Running System Upgrade---" &&
 sudo zypper dup &&
 echo "---Updating Flatpaks---" &&
