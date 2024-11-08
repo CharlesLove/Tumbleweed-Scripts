@@ -30,6 +30,8 @@ echo "---Running System Upgrade---" &&
 sudo zypper dup &&
 echo "---Updating Flatpaks---" &&
 flatpak update &&
+echo "---Updating Snap Packages---" &&
+sudo snap refresh &&
 echo "---Updates Finished---" &&
 final_snap_version="$( lsb-release -r )" &&
 
