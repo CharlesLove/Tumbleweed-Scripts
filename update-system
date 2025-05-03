@@ -29,7 +29,18 @@ sudo systemctl stop packagekit &&
 echo "---Running System Upgrade---" &&
 sudo zypper dup &&
 echo "---Updating Flatpaks---" &&
-sudo flatpak update &&
+sudo flatpak update
+
+# Check if snap is installed
+if command -v snap >/dev/null 2>&1; then
+    read -p "Do you want to update all snap packages? (Y/n): " response
+    response=${response:-y}
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        echo "---Updating Snap packages---" &&
+        sudo snap refresh
+    fi
+fi
+
 echo "---Updates Finished---" &&
 final_snap_version="$( lsb-release -r )" &&
 
