@@ -31,6 +31,11 @@ echo "---Running System Upgrade---" &&
 sudo zypper --non-interactive dup --auto-agree-with-licenses &&
 echo "---Updating Flatpaks---" &&
 sudo flatpak update --assumeyes &&
+# Check if snap is installed
+if command -v snap >/dev/null 2>&1; then
+    echo "---Updating Snap packages---" &&
+    sudo snap refresh
+fi
 echo "---Updates Finished---" &&
 final_snap_version="$( lsb-release -r )" &&
 
