@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # This script does a distribution upgrade and updates flatpaks
-# for OpenSUSE Tumbleweed installations
+# for OpenSUSE Tumbleweed installations, automatically using
+# default options when prompted and agreeing to all licenses
 
 # Install instructions:
 # - place this file, update-system, in /home/[YOURNAME]/bin/
@@ -27,20 +28,14 @@ echo $original_snap_version &&
 echo "---Stopping Packagekit---" &&
 sudo systemctl stop packagekit &&
 echo "---Running System Upgrade---" &&
-sudo zypper dup &&
+sudo zypper --non-interactive dup --auto-agree-with-licenses &&
 echo "---Updating Flatpaks---" &&
-sudo flatpak update
-
+sudo flatpak update --assumeyes &&
 # Check if snap is installed
 if command -v snap >/dev/null 2>&1; then
-    read -p "Do you want to update all snap packages? (Y/n): " response
-    response=${response:-y}
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-        echo "---Updating Snap packages---" &&
-        sudo snap refresh
-    fi
+    echo "---Updating Snap packages---" &&
+    sudo snap refresh
 fi
-
 echo "---Updates Finished---" &&
 final_snap_version="$( lsb-release -r )" &&
 
