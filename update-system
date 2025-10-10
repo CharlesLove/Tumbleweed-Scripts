@@ -28,7 +28,7 @@ echo $original_snap_version &&
 echo "---Stopping Packagekit---" &&
 sudo systemctl stop packagekit &&
 echo "---Running System Upgrade---" &&
-sudo zypper --non-interactive dup --auto-agree-with-licenses &&
+sudo zypper dup --auto-agree-with-licenses &&
 echo "---Updating Flatpaks---" &&
 sudo flatpak update --assumeyes &&
 # Check if snap is installed
